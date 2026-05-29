@@ -127,6 +127,20 @@ export default function App() {
       setChatHistory(JSON.parse(localChat));
     }
 
+    // Recover login state from backend memory if iframe localStorage is restricted or cleared
+    const checkServerSession = async () => {
+      try {
+        const res = await fetch('/api/session');
+        const data = await res.json();
+        if (data.user) {
+          setUser(data.user);
+        }
+      } catch (err) {
+        console.error("Failed loading persistent session from server:", err);
+      }
+    };
+    checkServerSession();
+
     fetchAnnouncements();
   }, []);
 
@@ -284,6 +298,7 @@ export default function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('fire_protection_user');
+    fetch('/api/session', { method: 'DELETE' }).catch(() => {});
     setActiveTab('home');
   };
 
@@ -295,7 +310,7 @@ export default function App() {
       navDirectory: "Helpline Directory",
       navBudget: "Budget & Charts",
       navPlanner: "Goal Plans",
-      navAssistant: "Guardian Assistant",
+      navAssistant: "Human Safety",
       callerTitle: "ESTABLISHING EMERGENCY HOTLINE TRUNK...",
       callerDesc: "Connecting directly. Stay alert and keep communication clear.",
       emergencyAlert: "STANDBY DIALING ATTEMPT"
@@ -307,7 +322,7 @@ export default function App() {
       navDirectory: "জরুরি ডিরেক্টরি",
       navBudget: "বাজেট এবং গ্রাফ",
       navPlanner: "পরিকল্পনা বুক",
-      navAssistant: "গার্ডিয়ান অ্যাসিস্ট্যান্ট",
+      navAssistant: "Human Safety (নিরাপত্তা ও আইন)",
       callerTitle: "হটলাইন সিমুলেশন কানেক্ট করা হচ্ছে...",
       callerDesc: "সরাসরি কানেকশন করা হবে। শান্ত থাকুন এবং নির্দেশনা অনুসরন করুন।",
       emergencyAlert: "জরুরি ডায়ালিং প্রচেষ্টা"
@@ -322,13 +337,18 @@ export default function App() {
         onLoginSuccess={(validUser) => {
           setUser(validUser);
           localStorage.setItem('fire_protection_user', JSON.stringify(validUser));
+          fetch('/api/session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: validUser })
+          }).catch(err => console.error("Failed backend session sync:", err));
         }} 
       />
     );
   }
 
   return (
-    <div className="h-screen w-screen bg-[#050508] text-[#f1f5f9] relative overflow-hidden font-sans flex flex-col select-none">
+    <div className="h-screen w-screen bg-[#050508] text-[#f1f5f9] relative overflow-hidden font-sans flex flex-col">
       
       {/* Glow Refraction Orbits styled perfectly to match artistic flair criteria */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -492,7 +512,10 @@ export default function App() {
           </header>
 
           {/* Core presentation screen outlet */}
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 relative">
+          <main 
+            className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 relative"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             
             {activeTab === 'home' && (
               <DashboardHome 

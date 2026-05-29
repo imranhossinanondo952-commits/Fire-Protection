@@ -35,33 +35,6 @@ function getAIInstance() {
 // Initial Database Stores (In-memory backends mimicking Firestore sync)
 let helplinesStore = [
   {
-    id: "f1",
-    name: "Fire Service Headquarters Dhaka",
-    banglaName: "ফায়ার সার্ভিস সদর দফতর ঢাকা",
-    phone: "01730002222",
-    address: "Kazi Alauddin Road, Dhaka 1000",
-    banglaAddress: "কাজী আলাউদ্দিন রোড, ঢাকা ১০০০",
-    category: "fire"
-  },
-  {
-    id: "f2",
-    name: "Chittagong Fire Station",
-    banglaName: "চট্টগ্রাম ফায়ার স্টেশন",
-    phone: "031716326",
-    address: "Agrabad Commercial Area, Chittagong",
-    banglaAddress: "আগ্রাবাদ বাণিজ্যিক এলাকা, চট্টগ্রাম",
-    category: "fire"
-  },
-  {
-    id: "f3",
-    name: "Sylhet Fire Department Complex",
-    banglaName: "সিলেট ফায়ার ডিপার্টমেন্ট কমপ্লেক্স",
-    phone: "01711223344",
-    address: "Keane Bridge West Approach, Sylhet 3100",
-    banglaAddress: "কীন ব্রিজ পশ্চিম অ্যাপ্রোচ, সিলেট ৩১০০",
-    category: "fire"
-  },
-  {
     id: "p1",
     name: "National Emergency Helpline (999)",
     banglaName: "জাতীয় জরুরী হেল্পলাইন (৯৯৯)",
@@ -71,31 +44,148 @@ let helplinesStore = [
     category: "general"
   },
   {
-    id: "p2",
-    name: "Tejgaon Police Station",
-    banglaName: "তেজগাঁও থানা",
-    phone: "01713373155",
-    address: "Tejgaon Industrial Area, Dhaka",
-    banglaAddress: "তেজগাঁও শিল্প এলাকা, ঢাকা",
+    id: "f_dhaka",
+    name: "Dhaka Division Fire Control Room",
+    banglaName: "ঢাকা বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002222",
+    address: "Kazi Alauddin Road, Dhaka 1000",
+    banglaAddress: "কাজী আলাউদ্দিন রোড, ঢাকা ১০০০",
+    category: "fire"
+  },
+  {
+    id: "p_dhaka",
+    name: "Dhaka Metropolitan Police (DMP)",
+    banglaName: "ঢাকা মেট্রোপলিটন পুলিশ (ডিএমপি)",
+    phone: "01713373100",
+    address: "DMP HQ, 36 Minto Road, Dhaka",
+    banglaAddress: "ডিএমপি হেডকোয়ার্টার্স, ৩৬ মিন্টো রোড, ঢাকা",
     category: "police"
   },
   {
-    id: "p3",
-    name: "Double Mooring Police Station CTG",
-    banglaName: "ডবলমুরিং থানা চট্টগ্রাম",
-    phone: "01713373266",
-    address: "Sheikh Mujib Road, Chittagong",
-    banglaAddress: "শেখ মুজিব রোড, চট্টগ্রাম",
+    id: "f_ctg",
+    name: "Chattogram Division Fire Control",
+    banglaName: "চট্টগ্রাম বিভাগ ফায়ার সার্ভিস কন্ট্রোল",
+    phone: "01730002235",
+    address: "Agrabad Commercial Area, Chattogram",
+    banglaAddress: "আগ্রাবাদ বাণিজ্যিক এলাকা, চট্টগ্রাম",
+    category: "fire"
+  },
+  {
+    id: "p_ctg",
+    name: "Chattogram Metropolitan Police (CMP)",
+    banglaName: "চট্টগ্রাম মেট্রোপলিটন পুলিশ (সিএমপি)",
+    phone: "01713373200",
+    address: "Lalkhan Bazar, Chattogram",
+    banglaAddress: "লালখান বাজার, চট্টগ্রাম",
     category: "police"
   },
   {
-    id: "m1",
-    name: "Dhaka Medical College Hospital",
-    banglaName: "ঢাকা মেডিকেল কলেজ হাসপাতাল",
-    phone: "0255165088",
-    address: "Ramna, Dhaka 1000",
-    banglaAddress: "রমনা, ঢাকা ১০০০",
-    category: "medical"
+    id: "f_raj",
+    name: "Rajshahi Division Fire Control Room",
+    banglaName: "রাজশাহী বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002241",
+    address: "Rajshahi Station Road, Rajshahi",
+    banglaAddress: "রাজশাহী স্টেশন রোড, রাজশাহী",
+    category: "fire"
+  },
+  {
+    id: "p_raj",
+    name: "Rajshahi Metropolitan Police (RMP)",
+    banglaName: "রাজশাহী মেট্রোপলিটন পুলিশ (আরএমপি)",
+    phone: "01713373300",
+    address: "RMP Headquarter, Rajshahi",
+    banglaAddress: "আরএমপি হেডকোয়ার্টার, রাজশাহী",
+    category: "police"
+  },
+  {
+    id: "f_khulna",
+    name: "Khulna Division Fire Control Room",
+    banglaName: "খুলনা বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002242",
+    address: "Boyra Main Road, Khulna",
+    banglaAddress: "বয়রা প্রধান সড়ক, খুলনা",
+    category: "fire"
+  },
+  {
+    id: "p_khulna",
+    name: "Khulna Metropolitan Police (KMP)",
+    banglaName: "খুলনা মেট্রোপলিটন পুলিশ (কেএমপি)",
+    phone: "01713373400",
+    address: "KMP HQ, Jahanabad, Khulna",
+    banglaAddress: "কেএমপি হেডকোয়ার্টার, জাহানাবাদ, খুলনা",
+    category: "police"
+  },
+  {
+    id: "f_sylhet",
+    name: "Sylhet Division Fire Control Room",
+    banglaName: "সিলেট বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002243",
+    address: "Keane Bridge West Approach, Sylhet",
+    banglaAddress: "কীন ব্রিজ পশ্চিম অ্যাপ্রোচ, সিলেট",
+    category: "fire"
+  },
+  {
+    id: "p_sylhet",
+    name: "Sylhet Metropolitan Police (SMP)",
+    banglaName: "সিলেট মেট্রোপলিটন পুলিশ (এসএমপি)",
+    phone: "01713373600",
+    address: "SMP Headquarter, Subhanighat, Sylhet",
+    banglaAddress: "এসএমপি হেডকোয়ার্টার, সোবহানীঘাট, সিলেট",
+    category: "police"
+  },
+  {
+    id: "f_barisal",
+    name: "Barishal Division Fire Control Room",
+    banglaName: "বরিশাল বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002244",
+    address: "Band Road, Barishal 8200",
+    banglaAddress: "বান্দ রোড, বরিশাল ৮২০০",
+    category: "fire"
+  },
+  {
+    id: "p_barisal",
+    name: "Barishal Metropolitan Police (BMP)",
+    banglaName: "বরিশাল মেট্রোপলিটন পুলিশ (বিএমপি)",
+    phone: "01713373500",
+    address: "BMP HQ, Band Road, Barishal",
+    banglaAddress: "বিএমপি হেডকোয়ার্টার, বান্দ রোড, বরিশাল",
+    category: "police"
+  },
+  {
+    id: "f_rangpur",
+    name: "Rangpur Division Fire Control Room",
+    banglaName: "রংপুর বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002245",
+    address: "Rangpur Fire Station, Rangpur",
+    banglaAddress: "রংপুর ফায়ার স্টেশন, রংপুর",
+    category: "fire"
+  },
+  {
+    id: "p_rangpur",
+    name: "Rangpur District Police Control Room",
+    banglaName: "রংপুর জেলা পুলিশ কন্ট্রোল রুম",
+    phone: "01713373700",
+    address: "District Police Lines, Rangpur",
+    banglaAddress: "জেলা পুলিশ লাইন্স, রংপুর",
+    category: "police"
+  },
+  {
+    id: "f_mym",
+    name: "Mymensingh Division Fire Control Room",
+    banglaName: "ময়মনসিংহ বিভাগ ফায়ার সার্ভিস কন্ট্রোল রুম",
+    phone: "01730002246",
+    address: "Mymensingh Fire Station, Mymensingh",
+    banglaAddress: "ময়মনসিংহ ফায়ার স্টেশন, ময়মনসিংহ",
+    category: "fire"
+  },
+  {
+    id: "p_mym",
+    name: "Mymensingh District Police Control Room",
+    banglaName: "ময়মনসিংহ জেলা পুলিশ কন্ট্রোল রুম",
+    phone: "01713373800",
+    address: "District Police Lines, Mymensingh",
+    banglaAddress: "জেলা পুলিশ লাইন্স, ময়মনসিংহ",
+    category: "police"
   }
 ];
 
@@ -131,6 +221,25 @@ let announcementsStore = [
 
 // Helper to sanitize inputs
 const ensureId = (obj: any) => ({ ...obj, id: obj.id || Date.now().toString() });
+
+// -------------------------------------------------------------
+// USER SESSION STORE (Bypasses iframe localstorage partition blocks on refresh)
+// -------------------------------------------------------------
+let userSessionStore: any = null;
+
+app.get("/api/session", (req, res) => {
+  res.json({ user: userSessionStore });
+});
+
+app.post("/api/session", (req, res) => {
+  userSessionStore = req.body.user;
+  res.json({ success: true, user: userSessionStore });
+});
+
+app.delete("/api/session", (req, res) => {
+  userSessionStore = null;
+  res.json({ success: true });
+});
 
 // -------------------------------------------------------------
 // HELPLINE REST ENDPOINTS (Syncs with UI - state normal vs admin editing)

@@ -42,7 +42,15 @@ export default function App() {
     email: string;
     phone: string;
     avatar: string;
-  } | null>(null);
+  } | null>(() => {
+    try {
+      const savedUser = localStorage.getItem('fire_protection_user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (e) {
+      console.error("Failed loading user session", e);
+      return null;
+    }
+  });
 
   // Separate state workflow for helplines normal user vs admin modifier
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -275,6 +283,7 @@ export default function App() {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem('fire_protection_user');
     setActiveTab('home');
   };
 
@@ -310,13 +319,16 @@ export default function App() {
     return (
       <AuthScreen 
         language={language} 
-        onLoginSuccess={(validUser) => setUser(validUser)} 
+        onLoginSuccess={(validUser) => {
+          setUser(validUser);
+          localStorage.setItem('fire_protection_user', JSON.stringify(validUser));
+        }} 
       />
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#050508] text-[#f1f5f9] relative overflow-x-hidden font-sans">
+    <div className="h-screen w-screen bg-[#050508] text-[#f1f5f9] relative overflow-hidden font-sans flex flex-col select-none">
       
       {/* Glow Refraction Orbits styled perfectly to match artistic flair criteria */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -325,7 +337,7 @@ export default function App() {
         <div className="absolute top-[40%] left-[30%] w-[350px] h-[350px] rounded-full bg-rose-600/5 blur-[120px]"></div>
       </div>
 
-      <div className="flex h-screen relative z-10">
+      <div className="flex flex-1 h-full relative z-10 overflow-hidden">
 
         {/* SIDE BAR NAVIGATION - Art Flair standard layout */}
         <aside className="w-64 h-full border-r border-white/10 hidden lg:flex flex-col justify-between py-6 px-4 bg-black/3c backdrop-blur-xl shrink-0">

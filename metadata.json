@@ -1,0 +1,6 @@
+{
+  "name": "Fire Protection",
+  "description": "Premium Glassmorphic Fire Protection and Security Suite featuring a modern dashboard, local directory, financial logs, emergency routines and a Gemini AI-powered assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
